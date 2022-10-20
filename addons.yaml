@@ -11,17 +11,20 @@ microk8s-addons:
 
     - name: "istio"
       description: "Core Istio service mesh services"
-      version: "1.10.3"
+      version: "1.14.4"
       check_status: "${SNAP_DATA}/bin/istioctl"
       supported_architectures:
         - amd64
 
     - name: "knative"
-      description: "The Knative framework on Kubernetes."
-      version: "0.24.0"
-      check_status: "deployment.apps/eventing-webhook"
+      description: "Knative Serverless and Event Driven Applications"
+      version: "1.6.0"
+      check_status: "deployment.apps/knative-operator"
       supported_architectures:
+        - arm64
         - amd64
+        - s390x
+        - ppc64le
 
     - name: "fluentd"
       description: "Elasticsearch-Fluentd-Kibana logging and monitoring"
@@ -32,14 +35,15 @@ microk8s-addons:
 
     - name: "jaeger"
       description: "Kubernetes Jaeger operator with its simple config"
-      version: "1.24.0"
+      version: "1.36.0"
       check_status: "pod/jaeger-operator"
       supported_architectures:
+        - arm64
         - amd64
 
     - name: "linkerd"
       description: "Linkerd is a service mesh for Kubernetes and other frameworks"
-      version: "2.11.1"
+      version: "2.11.3"
       check_status: "pod/linkerd-destination"
       supported_architectures:
         - amd64
@@ -49,13 +53,24 @@ microk8s-addons:
       description: "SDN, fast with full network policy"
       version: "1.10"
       check_status: "pod/cilium"
+      confinement: "classic"
       supported_architectures:
         - amd64
 
     - name: "multus"
       description: "Multus CNI enables attaching multiple network interfaces to pods"
-      version: "3.4.2"
+      version: "3.9"
       check_status: "${SNAP_DATA}/args/cni-network/00-multus.conf"
+      confinement: "classic"
+      supported_architectures:
+        - amd64
+        - arm64
+
+    - name: "nfs"
+      description: "NFS Server Provisioner"
+      version: "1.4.0"
+      check_status: "statefulset.apps/nfs-server-provisioner"
+      confinement: "classic"
       supported_architectures:
         - amd64
 
@@ -101,6 +116,7 @@ microk8s-addons:
       description: "Kata Containers is a secure runtime with lightweight VMS"
       version: "latest/stable"
       check_status: "${SNAP_DATA}/var/lock/kata.enabled"
+      confinement: "classic"
       supported_architectures:
         - amd64
 
@@ -111,10 +127,10 @@ microk8s-addons:
       supported_architectures:
         - amd64
 
-    - name: "starboard"
-      description: "Kubernetes-native security toolkit"
-      version: "0.14.1"
-      check_status: "deployment.apps/starboard-operator"
+    - name: "trivy"
+      description: "Kubernetes-native security scanner"
+      version: "0.2.0"
+      check_status: "deployment.apps/trivy-operator"
       supported_architectures:
         - arm64
         - amd64
@@ -123,5 +139,20 @@ microk8s-addons:
       description: "Argo CD is a declarative continuous deployment for Kubernetes."
       version: "2.3.3"
       check_status: "deployment.apps/argo-cd-argocd-server"
+      supported_architectures:
+        - amd64
+
+    - name: "osm-edge"
+      description: "osm-edge is a lightweight SMI compatible service mesh for the edge-computing."
+      version: "1.1.0"
+      check_status: "pod/osm-controller"
+      supported_architectures:
+        - amd64
+        - arm64
+
+    - name: "sosivio"
+      description: "Kubernetes Predictive Troubleshooting, Observability, and Resource Optimization"
+      version: "1.0.0"
+      check_status: "deployment.apps/sosivio-dashboard"
       supported_architectures:
         - amd64
